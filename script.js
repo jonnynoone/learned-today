@@ -1,3 +1,18 @@
+const CATEGORIES = [
+    { name: "technology", color: "#3b82f6" },
+    { name: "science", color: "#16a34a" },
+    { name: "finance", color: "#ef4444" },
+    { name: "society", color: "#eab308" },
+    { name: "entertainment", color: "#db2777" },
+    { name: "health", color: "#14b8a6" },
+    { name: "history", color: "#f97316" },
+    { name: "news", color: "#8b5cf6" }
+];
+
+function getColor(catName) {
+    return CATEGORIES.find(cat => cat.name === catName).color;
+}
+
 // Selecting DOM Elements
 const shareBtn = document.querySelector('.btn-open');
 const form = document.querySelector('.fact-form');
@@ -16,6 +31,9 @@ async function loadFacts() {
     });
     
     const data = await res.json();
+    console.log(data);
+    const filteredData = data.filter(fact => fact.category == 'society');
+
     createFactsList(data);
 }
 loadFacts();
@@ -23,43 +41,13 @@ loadFacts();
 function createFactsList(dataArr) {
     // Generate HTML from data
     const htmlArr = dataArr.map(fact => {
-        let color;
-        switch (fact.category) {
-            case 'technology':
-                color = '#3b82f6';
-                break;
-            case 'science':
-                color = '#16a34a';
-                break;
-            case 'finance':
-                color = '#ef4444';
-                break;
-            case 'society':
-                color = '#eab308';
-                break;
-            case 'entertainment':
-                color = '#db2777';
-                break;
-            case 'health':
-                color = '#14b8a6';
-                break;
-            case 'history':
-                color = '#f97316';
-                break;
-            case 'news':
-                color = '#8b5cf6';
-                break;
-            default:
-                color = '#000000';
-        }
-
         return `<li class="fact">
             <p>
                 ${fact.text}
                 <a class="source" href="${fact.source}" target="_blank">(Source)</a>
             </p>
 
-            <span class="tag" style="background-color: ${color}">${fact.category}</span>
+            <span class="tag" style="background-color: ${getColor(fact.category)}">${fact.category}</span>
 
             <div class="vote-buttons">
                 <button>👍 ${fact.votesInteresting}</button>
@@ -83,3 +71,4 @@ shareBtn.addEventListener('click', function(e) {
         shareBtn.textContent = 'Share a fact';
     }
 });
+
