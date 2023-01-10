@@ -19,6 +19,14 @@ ul {
     display: none !important;
 }
 
+.message {
+    font-size: 32px;
+    font-weight: 600;
+    text-align: center;
+    text-transform: uppercase;
+    margin-top: 30px;
+}
+
 #root {
     margin: 0 auto;
     max-width: 1200px;
@@ -187,6 +195,11 @@ h1 {
 
 .vote-buttons button:hover {
     background-color: #292524;
+}
+
+.vote-buttons button:disabled {
+    background-color: #44403c;
+    cursor: wait;
 }
 
 @media (max-width: 1200px) {
